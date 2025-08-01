@@ -216,9 +216,11 @@ body {
     <div class="sidebar">
       <h2>Filters</h2>
       <label>Category</label>
-      <select>
-    
-      </select>
+  <select name="category">
+    {% for cat in categorys %}
+      <option value="{{ cat.id }}">{{ cat.name }}</option>
+    {% endfor %}
+  </select>
 
       <label>Price Range</label>
      <input type="number" placeholder="Enter max price" min="0" class="price-input">
@@ -234,27 +236,27 @@ body {
       <div class="product-grid">
 
         <!-- Product Card -->
-        <div class="product-card">
-          <img src="https://img.freepik.com/premium-photo/algorithmic-cybernetics_1029473-310585.jpg" alt="Product 1">
-          <h3>Product</h3>
-          <p>Short product description goes </p>
-           <p class="stock">
-        {% if product.stock > 0 %}
-            <span class="text-green-600" style="color: green;">In Stock ({{ product.stock }})</span>
-        {% else %}
-            <span class="text-red-600" style="color: black;">Out of Stock</span>
-        {% endif %}
-    </p>
-            <div class="price" style="display: flex;">
-          <p class="price">₹499.00</p>&nbsp;
-          <p class="discountprice">₹499.00</p>
-            </div>
-          <button>Add to Cart</button>
+      {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image.url|default:'https://img.freepik.com/premium-photo/algorithmic-cybernetics_1029473-310585.jpg' }}" alt="{{ product.name }}">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description|truncatechars:50 }}</p>
+                    <p class="stock">
+                        {% if product.stock > 0 %}
+                            <span style="color: green;">In Stock ({{ product.stock }})</span>
+                        {% else %}
+                            <span style="color: red;">Out of Stock</span>
+                        {% endif %}
+                    </p>
+                    <div class="price" style="display: flex;">
+                        <p>₹{{ product.price }}</p>&nbsp;
+                        <p class="discountprice">₹{{ product.discount_price|default:product.price }}</p>
+                    </div>
+                    <button>Add to Cart</button>
+                </div>
+            {% endfor %}
         </div>
-
-    
         <!-- Add more product cards as needed -->
-
       </div>
     </div>
 
