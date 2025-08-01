@@ -4,5 +4,5 @@ from .import views
 app_name = 'products'
 
 urlpatterns = [
-        path('productlist',views.product_list,name='product_list'),
+        path('productlist/',views.product_list,name='product_list'),
 ]
